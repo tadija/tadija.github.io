@@ -1,0 +1,22 @@
+<!-- layouts/shortcodes/media.html -->
+
+{{ $path := .Get "path" | default "../media/" }}
+{{ $file := .Get "file" }}
+{{ $type := .Get "type" | default "image" }}
+{{ $alt := .Get "alt" | default ""}}
+{{ $style := .Get "style" | default "" }}
+
+{{ $src := printf "%s%s" $path $file }}
+
+{{ if eq $type "image" }}
+    <a href="{{ $src }}">
+        <img src="{{ $src }}" alt="{{ $alt }}" style="{{ $style | safeCSS }}" />
+    </a>
+{{ else if eq $type "video" }}
+    <video controls width=100% style="{{ $style | safeCSS }}">
+        <source src="{{ $src }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{{ else }}
+    Unknown media type
+{{ end }}
